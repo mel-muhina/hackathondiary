@@ -11,7 +11,7 @@ CREATE TABLE diary (
 );
 
 
-INSERT INTO diary_entries (entry_date, entry_time, category, content) VALUES 
+INSERT INTO diary (entry_date, entry_time, category, content) VALUES 
     ('2024-07-26', '09:00:00', 'Personal', 'Started a new diary today. Feeling excited!'), 
     ('2024-07-27', '10:30:00', 'Work', 'Had a productive meeting with the team.'),
     ('2024-07-28', '12:15:00', 'Travel', 'Visited the beach and enjoyed a beautiful sunset.'),
