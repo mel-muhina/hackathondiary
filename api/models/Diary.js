@@ -33,9 +33,17 @@ class Diary {
       }
 
     static async create(data) {
-        const { category, content, title, author_name } = data;
-        const response = await db.query("INSERT INTO diary (category, content, title, author_name) VALUES ($1, $2, $3, $4) RETURNING *;", [category, content, title, author_name]);
+      console.log("Model create 1")
+        const { category, content, title, author_name} = data;
+        console.log("Model create 2")
+        const date = '2024-08-02'
+        const time = '10:30:00'
+        const response = await db.query("INSERT INTO diary (category, content, title, author_name, entry_date, entry_time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;", [category, content, title, author_name, date, time]);
+        console.log("Model create 3")
+
         const diaryId = response.rows[0].entry_id;
+        console.log("Model create 4")
+
         const newDiary = await Diary.getOneById(diaryId);
     
         return newDiary;

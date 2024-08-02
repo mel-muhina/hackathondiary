@@ -22,6 +22,8 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
+    console.log("Controller create 1")
+
       const data = req.body
       const newPost = await Diary.create(data)
       res.status(201).json(newPost)
