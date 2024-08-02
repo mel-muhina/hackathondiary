@@ -35,9 +35,9 @@ async function create(req, res) {
 
 async function destroy(req, res) {
   try {
-     const id = req.params.id
-     const diary = await Diary.getOneById(id)
-     const result = await Diary.destroy()
+     const id = parseInt(req.params.id);
+     const diary = await Diary.getOneById(id);
+     const result = await diary.destroy()
      res.sendStatus(204)
 
   } catch(err) {
