@@ -1,20 +1,20 @@
 const express = require('express');
 const cors = require("cors")
 
-const logger = require("./logger")
+const logger = require("./middleware/logger")
 
 const diaryRouter = require('./routers/diary');
 
 
-const app = express()
+const api = express()
 
-app.use(express.json());
-app.use(cors())
-app.use(logger)
+api.use(express.json());
+api.use(cors())
+api.use(logger)
 
-app.use("/", diaryRouter)
+api.use("/", diaryRouter)
 
-app.get("/", (req, res) => {
+api.get("/", (req, res) => {
   res.status(200).json({
     title: "Diary Placeholder",
     description: "Write all your secrets and stuff!"
