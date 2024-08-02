@@ -5,8 +5,11 @@ CREATE TABLE diary (
     entry_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     entry_date DATE NOT NULL,
     entry_time TIME NOT NULL,
+  //  title VARCHAR(50) NOT NULL,
+  // author_name VARCHAR(50) NOT NULL,
     category VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
+    authorId INT NOT NULL,
     CHECK (entry_date <= CURRENT_DATE)
 );
 
@@ -20,4 +23,5 @@ INSERT INTO diary (entry_date, entry_time, category, content) VALUES
     ('2024-07-31', '18:00:00', 'Food', 'Cooked a delicious pasta for dinner.'),
     ('2024-08-01', '20:10:00', 'Entertainment', 'Watched an amazing movie with friends.'),
     ('2024-08-02', '21:30:00', 'Personal', 'Spent time reflecting on my goals for the year.');
+
 
