@@ -20,7 +20,19 @@ async function show(req, res) {
   }
 }
 
+async function create(req, res) {
+  try {
+      const data = req.body
+      const newPost = await Diary.create(data)
+      res.status(201).json(newPost)
+
+  } catch(err) {
+      res.status(400).json({ error: err.message })
+  }
+}
+
+
 
 module.exports = {
-    index, show
+    index, show, create
 }
