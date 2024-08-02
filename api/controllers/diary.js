@@ -31,8 +31,19 @@ async function create(req, res) {
   }
 }
 
+async function destroy(req, res) {
+  try {
+     const id = req.params.id
+     const diary = await Diary.getOneById(id)
+     const result = await Diary.destroy()
+     res.sendStatus(204)
+
+  } catch(err) {
+      res.status(404).json({ error: err.message })
+  }
+}
 
 
 module.exports = {
-    index, show, create
+    index, show, create, destroy
 }

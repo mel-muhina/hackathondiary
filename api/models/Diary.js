@@ -39,6 +39,14 @@ class Diary {
     
         return newDiary;
       }
-      
 
-}module.exports = Diary;
+     async destroy(data) {
+        const response = await db.query("DELETE FROM diary WHERE id = $1 RETURNING *;", [this.id])
+        return new Diary(response.rows[0])
+     
+    }
+
+
+}
+
+module.exports = Diary;
