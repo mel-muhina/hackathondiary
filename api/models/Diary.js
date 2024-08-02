@@ -13,7 +13,7 @@ class Diary {
 
 
     static async getAll() {
-        const response = await db.query("SELECT * FROM diary ORDER BY entry_date;")
+        const response = await db.query("SELECT * FROM diary ORDER BY entry_id;")
         if (response.rows.length === 0) {
           throw new Error("No diary posts available.")
         }
