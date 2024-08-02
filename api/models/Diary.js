@@ -21,4 +21,14 @@ class Diary {
         return response.rows.map(p => new Diary(p));
       }
 
+    static async getOneById(id) {
+        const response = await db.query("SELECT * FROM diary WHERE id = $1;", [id]);
+
+        if (response.rows.length != 1) {
+          throw new Error("Unable to locate diary entry.")
+        }
+
+        return new Diary(response.rows[0]);
+      }
+
 }
