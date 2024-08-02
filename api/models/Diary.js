@@ -2,13 +2,14 @@ const db = require("../database/connect")
 
 class Diary {
 
-   constructor({ entry_id, entry_date, entry_time, category, authorId }) {
+   constructor({ entry_id, entry_date, entry_time, category, content, title, author_name }) {
       this.entry_id = entry_id;
       this.entry_date = entry_date;
       this.entry_time = entry_time;
       this.category = category;
       this.content = content;
-      this.authorId = authorId;
+      this.title = title;
+      this.author_name = author_name;
     }
 
 
@@ -32,34 +33,14 @@ class Diary {
       }
 
     static async create(data) {
-        const { postName, postDescription } = data;
-        const response = await db.query("INSERT INTO diary (postName, postDescription) VALUES ($1, $2) RETURNING *;", [postName, postDescription]);
+        const { category, content, title, author_name } = data;
+        const response = await db.query("INSERT INTO diary (category, content, title, author_name) VALUES ($1, $2, $3, $4) RETURNING *;", [category, content, title, author_name]);
         const diaryId = response.rows[0].entry_id;
         const newDiary = await Diary.getOneById(diaryId);
     
         return newDiary;
       }
 
-
-    /* 
-    static async create(data) {
-    const { category, content, title, author_name } = data;
-    if (!authorId) {
-        throw new Error('authorId is required');
-    }
-    const response = await db.query(
-        `INSERT INTO diary (entry_date, entry_time, category, content, authorId) 
-        VALUES ($1, $2, $3, $4, $5) 
-        RETURNING *;`,
-        [entry_date, entry_time, category, content, authorId]
-    );
-    const diaryId = response.rows[0].entry_id;
-    const newDiary = await Diary.getOneById(diaryId);
-
-    return newDiary;
-}
- 
-    */
 
      async destroy(data) {
         const response = await db.query("DELETE FROM diary WHERE entry_id = $1 RETURNING *;", [this.entry_id])
