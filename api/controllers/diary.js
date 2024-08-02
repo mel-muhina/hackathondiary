@@ -32,7 +32,7 @@ async function create(req, res) {
       res.status(400).json({ error: err.message })
   }
 }
-
+// for Lili
 async function destroy(req, res) {
   try {
      const id = parseInt(req.params.id);
