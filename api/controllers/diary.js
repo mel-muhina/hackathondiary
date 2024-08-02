@@ -32,7 +32,25 @@ async function create(req, res) {
       res.status(400).json({ error: err.message })
   }
 }
-// for Lili
+
+async function update(req, res) {
+  try {
+      const author_name= req.params.author_name
+      const diary = await Diary.getOneById(author_name);
+
+      const newAuthor_name =  req.body
+
+      if(diary) {
+          const updatedAuthor = await diary.update(newAuthor_name);
+          res.status(200).json(updatedAuthor);
+      }
+  } catch (err) {
+      res.status(400).json({ error: err.message });
+  
+  }
+  //console.log("controller update 4");  
+};
+
 async function destroy(req, res) {
   try {
      const id = parseInt(req.params.id);
@@ -47,5 +65,5 @@ async function destroy(req, res) {
 
 
 module.exports = {
-    index, show, create, destroy
+    index, show, create, update, destroy
 }
