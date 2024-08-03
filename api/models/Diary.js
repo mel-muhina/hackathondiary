@@ -46,17 +46,15 @@ class Diary {
 
       async update(data) {
 
-        const {category, content, title} = data;
-        const oldId = req.params.id
-        console.log("Model update 1", data);
-        console.log("Model update 2", category, content, title);
+        const {entry_date, entry_time, category, content, title, author_name} = data;
+        console.log("Model updat 1", data);
+        console.log("Model updat 2", category, content, title, author_name);
         const oldContent = this.content;
-        console.log("Model update 3");
-        const checkId = await db.query("SELECT entry_id FROM diary WHERE entry_id = ($1);", [oldId]);
-        console.log("Model update 4");
-        if(checkId.rows.length > 0) {
-            const updatePost = checkId.rows[0]  
-            let response = await db.query("UPDATE diary SET category = ($1), content = ($2), title = ($3), WHERE entry_id = $4 RETURNING *;", [category, content, title, oldId]);
+        const existingContent = await db.query("SELECT entry_id FROM diary WHERE LOWER(entry_id) = LOWER($1);", [o]);
+
+        if(existingAuthor_name.rows.length > 0) {
+            const updatedAuthor_name = existingAuthor_name.rows[0].author_name    
+            let response = await db.query("UPDATE diary SET entry_date = ($1), entry_time = ($2), category = ($3), content = ($4), title = ($5), author_name = ($6), WHERE LOWER(author_name)= LOWER($7) RETURNING *;", [entry_date, entry_time, category, content, title, author_name, updatedAuthor_name]);
          console.log("MODEL UPDATE 5 ", response);
             return new Diary(response.rows[0]);
         } else {
@@ -64,7 +62,9 @@ class Diary {
         }
     }
 
-   
+    //mel
+
+
      async destroy(data) {
         const response = await db.query("DELETE FROM diary WHERE entry_id = $1 RETURNING *;", [this.entry_id])
         return new Diary(response.rows[0])

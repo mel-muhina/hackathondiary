@@ -35,21 +35,17 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
-      const id = parseInt(req.params.id);
-      const newContent =  req.body;
+      const entry_id= req.params.author_name
+      const diary = await Diary.getOneById(author_name);
 
-      const diary = await Diary.getOneById(id);
-      console.log("controller 3", diary)
-      
-      console.log("Controller 4", newContent)
+      const newAuthor_name =  req.body
+
       if(diary) {
-         console.log("Controller 5," , newContent)
-          const updateContent = await diary.update(newContent);
-          console.log("Controller 6")
-          res.status(200).json(updateContent);
+          const updatedAuthor = await diary.update(newAuthor_name);
+          res.status(200).json(updatedAuthor);
       }
   } catch (err) {
-      res.status(500).json({ error: err.message });
+      res.status(400).json({ error: err.message });
   
   }
   //console.log("controller update 4");  
