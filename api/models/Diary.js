@@ -46,16 +46,15 @@ class Diary {
 
       async update(data) {
 
-        const {entry_date, entry_time, category, content, title, author_name} = data;
-        console.log("Model updat 1", data);
-        console.log("Model updat 2", category, content, title, author_name);
-        const oldContent = this.content;
-        const existingContent = await db.query("SELECT entry_id FROM diary WHERE LOWER(entry_id) = LOWER($1);", [o]);
+        const {category, content, title, author_name} = data;
+        const existingContent = await db.query("SELECT entry_id FROM diary WHERE entry_id = ($1);", [this.entry_id]);
 
-        if(existingAuthor_name.rows.length > 0) {
-            const updatedAuthor_name = existingAuthor_name.rows[0].author_name    
-            let response = await db.query("UPDATE diary SET entry_date = ($1), entry_time = ($2), category = ($3), content = ($4), title = ($5), author_name = ($6), WHERE LOWER(author_name)= LOWER($7) RETURNING *;", [entry_date, entry_time, category, content, title, author_name, updatedAuthor_name]);
-         console.log("MODEL UPDATE 5 ", response);
+        if(existingContent.rows.length > 0) {
+          // These are temp date and time stamps while the automatic ones are being sorted
+            let newEntryDate =   "2024-08-01"
+            let newEntryTime = "10:30:00"
+
+            let response = await db.query("UPDATE diary SET entry_date =($1), entry_time = ($2), category = ($3), content = ($4), title = ($5), author_name =($6) WHERE entry_id =($7) RETURNING *;", [newEntryDate, newEntryTime, category, content, title, author_name, this.entry_id]);
             return new Diary(response.rows[0]);
         } else {
             throw new Error("A diary with this author name already exists");

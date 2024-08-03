@@ -35,14 +35,13 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
-      const entry_id= req.params.author_name
-      const diary = await Diary.getOneById(author_name);
-
-      const newAuthor_name =  req.body
+      const entry_id= req.params.id
+      const diary = await Diary.getOneById(entry_id);
+      const newContent =  req.body
 
       if(diary) {
-          const updatedAuthor = await diary.update(newAuthor_name);
-          res.status(200).json(updatedAuthor);
+          const updatedContent = await diary.update(newContent);
+          res.status(200).json(updatedContent);
       }
   } catch (err) {
       res.status(400).json({ error: err.message });
