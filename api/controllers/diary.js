@@ -22,6 +22,8 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
+    console.log("Controller create 1")
+
       const data = req.body
       const newPost = await Diary.create(data)
       res.status(201).json(newPost)
@@ -31,11 +33,28 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+      const entry_id= req.params.id
+      const diary = await Diary.getOneById(entry_id);
+      const newContent =  req.body
+
+      if(diary) {
+          const updatedContent = await diary.update(newContent);
+          res.status(200).json(updatedContent);
+      }
+  } catch (err) {
+      res.status(400).json({ error: err.message });
+  
+  }
+  //console.log("controller update 4");  
+};
+
 async function destroy(req, res) {
   try {
-     const id = req.params.id
-     const diary = await Diary.getOneById(id)
-     const result = await Diary.destroy()
+     const id = parseInt(req.params.id);
+     const diary = await Diary.getOneById(id);
+     const result = await diary.destroy()
      res.sendStatus(204)
 
   } catch(err) {
@@ -45,5 +64,5 @@ async function destroy(req, res) {
 
 
 module.exports = {
-    index, show, create, destroy
+    index, show, create, update, destroy
 }
